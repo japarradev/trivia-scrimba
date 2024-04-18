@@ -1,0 +1,225 @@
+
+*
+{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body
+{
+  background-color: #1C1C1C;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+main
+{
+  background-color: #F5F7FB;
+  width: 500px;
+  height: 500px;
+  position: relative;
+  overflow:hidden;
+  
+}
+
+html
+{
+  font-family: "Inter", sans-serif;
+}
+.welcome-sreen
+{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  height: 500px;
+  gap: 20px;
+}
+  
+
+
+h1
+{
+  font-family: "Karla", sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  color: #293264;
+  z-index: 1;
+}
+
+h2
+{
+  font-weight: 400;
+  font-size: 16px;
+  color: #293264;
+  font-weight: 400;
+  z-index: 1;
+
+}
+.button-main
+{
+  font-family: "Inter", sans-serif;
+  padding: 15px;
+  background-color: #4D5B9E;
+  font-size: 16px;
+  color: #F5F7FB;
+  border: none;
+  border-radius: 15px;
+  font-weight: 500;
+  width: 193px;
+  z-index: 1;
+  
+}
+.image-background1
+{
+  position: absolute;
+  transform: rotate(-10deg);
+  top: -140px;
+  right: -100px;
+  
+}
+.image-background2
+{
+  position: absolute;
+  bottom:-40px;
+  left: -60px;
+}
+
+.game
+{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 50px;
+  width: 500px;
+  height: 500px;
+  gap: 5px;
+  z-index: 1000;
+  
+  
+}
+
+.question 
+{
+  border-bottom: 1px solid #DBDEF0;
+  padding: 5px 0;
+  width: 100%;
+}
+
+.question .title-question 
+{
+  font-size: 16px;
+  font-family: "Karla", sans-serif;
+  font-weight: bold;
+  color: #293264;
+  margin-bottom: 10px;
+}
+
+
+.answers
+{
+  display: flex;
+  gap: 10px;
+}
+.button-answer
+{
+  
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
+  min-height: 30px;
+  
+}
+.button-answer label
+{
+  display: inline-block;
+  font-family: "Inter", sans-serif;
+  color: #293264;
+  border: 1px solid #4D5B9E;
+  padding: 5px 8px;
+  min-width: 66px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 10px;
+  cursor: pointer;
+ 
+}
+
+.button-answer-check
+{
+  
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
+  min-height: 30px;
+  
+}
+.button-answer-check label
+{
+  display: inline-block;
+  font-family: "Inter", sans-serif;
+  color: #8f94af;
+  border: 1px solid #a1a9cc;
+  padding: 5px 8px;
+  min-width: 66px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 10px;
+ 
+}
+
+.button-answer input 
+{
+  position: absolute;
+  left: -9999px;
+ 
+  
+}
+
+.button-answer input[type="radio"]:checked+label,
+.Checked+label {
+  background-color: #D6DBF5;
+  border: none;
+}
+
+.btn-default
+{
+  font-family: "Inter", sans-serif;
+  background-color: #4D5B9E;
+  margin-top: 5px;
+  color: #fff;
+  border: none;
+  font-size: 10px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  align-self: center;
+}
+.section-check-answer
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  column-gap: 10px;
+  margin-top: 5px;
+}
+
+.section-check-answer span
+{
+  
+  font-weight: bold;
+  color: #293264;
+  font-size: 12px;
+}
+.section-check-answer  .btn-default
+{
+  padding: 5px 10px;
+  margin-top: 0;
+  border-radius: 5px;
+}
