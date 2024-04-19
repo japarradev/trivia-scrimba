@@ -1,21 +1,49 @@
 import React from 'react';
 import Question from './Question';
-import questions from '../questions.js'
 import Answer from './Answer.js';
-
+import {decode} from 'html-entities';
 
 export default function Quizz()
 {
     const [questionsQuizz, setQuestionQuizz] = React.useState([]);
     const [endGame, setEndGame] = React.useState(false);
     const [correctAnswer, setCorrectAnswer] = React.useState(0);
+    const [numberGames, setNumberGames] = React.useState(0);
+    
 
     React.useEffect(()=>{
         const tempCorrectAnwser = questionsQuizz.filter((item) => item.correct_answer === item.answer).length
         setCorrectAnswer(tempCorrectAnwser);
     },[questionsQuizz])
 
+    React.useEffect(()=>{ 
+      
+            (async()=>{
     
+                const response = await fetch("https://opentdb.com/api.php?amount=5")
+                const data = await response.json()
+                const questions = await data.results
+                const newQuestions =  Array.isArray(questions) &&  questions.map((item, index) =>
+                    {
+                        let answers = [decode(item.correct_answer), ...decodeArray(item.incorrect_answers)] 
+                        answers = item.type === 'boolean' ? ['True', 'False'] : shuffle(answers);
+            
+                        return(
+                            {
+                               
+                                id:index,
+                                ...item,
+                                answers,
+                                question:(decode(item.question)),
+                            }
+                        )
+            
+                    })
+                    newQuestions.length > 0 && setQuestionQuizz(newQuestions);
+            })();
+        
+    },[numberGames])
+
     function handlerChangeAnswer(questionId, answer)
     {
         setQuestionQuizz((prevQuestionQuizz) =>
@@ -36,49 +64,17 @@ export default function Quizz()
     {
         setEndGame(true);
     }
-    const welcome = 
-            <div className='welcome-sreen'> 
-                <h1>Quizzical</h1>
-                <h2>Some description if needed</h2>
-                <button className='button-main' onClick={newGame}>Start quiz</button>
-            </div> 
-
-
-    const game = 
-    <div className='game'>
-        {questionsQuizz.map((item, index)=>{
-            return !endGame 
-            ? <Question key={index} question={item.question} answers={[...item.answers]} id={item.id} type ={item.type} handlerChangeAnswer={handlerChangeAnswer} />
-            : <Answer key={index} question={item.question} answers={[...item.answers]} id={item.id} type ={item.type} answer={item.answer} correct_answer={item.correct_answer}/>
-        })}
-       
-        {   !endGame ?
-            <button className ="btn-default" onClick={checkAnswers}>  Check answers</button> : 
-            <div className='section-check-answer'><span>{`You scored ${correctAnswer}/5 correct answers`}</span><button className ="btn-default" onClick={newGame}>Play again</button></div> 
-            }
-    </div>
-
 
       function newGame()
       {
+        setNumberGames((prev => prev + 1))
         setEndGame(false);
         setCorrectAnswer(0);
-        const newQuestions = questions.map(item =>
-        {
-            let answers = [item.correct_answer, ...item.incorrect_answers] 
-            answers = item.type === 'boolean' ? ['True', 'False'] : shuffle(answers);
-
-            return(
-                {
-                    ...item,
-                    answers
-                }
-            )
-
-        })
-        setQuestionQuizz(newQuestions);
       }
-
+      function decodeArray(array)
+      {
+        return array.map(item => decode(item))
+      }
       function shuffle(array) {
         let currentIndex = array.length;
         const tempArray = array
@@ -97,10 +93,17 @@ export default function Quizz()
       }
 
     return(
-        <main>
-            {/* <img className='image-background1' alt ='imagen de fondo' src='/images/blobs1.png'/> */}
-            {questionsQuizz.length === 0 ? welcome : game}
-            {/* <img className='image-background2' alt ='imagen de fondo' src='/images/blobs2.png'/> */}
-        </main>
+        <div className='game'>
+            {questionsQuizz.map((item, index)=>{
+                return !endGame 
+                ? <Question key={index} question={item.question} answers={[...item.answers]} id={item.id} type ={item.type} handlerChangeAnswer={handlerChangeAnswer} />
+                : <Answer key={index} question={item.question} answers={[...item.answers]} id={item.id} type ={item.type} answer={item.answer} correct_answer={item.correct_answer}/>
+            })}
+        
+            {   !endGame ?
+                <button className ="btn-default" onClick={checkAnswers}>  Check answers</button> : 
+                <div className='section-check-answer'><span>{`You scored ${correctAnswer}/5 correct answers`}</span><button className ="btn-default" onClick={newGame}>Play again</button></div> 
+                }
+        </div>
     )
 }
